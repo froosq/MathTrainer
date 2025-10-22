@@ -1,0 +1,158 @@
+/* Основной фон и шрифты */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+  text-align: center;
+  padding: 2em;
+  margin: 0;
+}
+
+/* Заголовок */
+h1 {
+  font-weight: 600;
+  font-size: 2.5em;
+  margin-bottom: 1em;
+  color: #ffffff;
+}
+
+/* Кнопки */
+button {
+  margin: 0.5em;
+  padding: 0.7em 1.5em;
+  font-size: 1em;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 500;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+/* Типы и уровни */
+#menu button { background-color: #2e2e2e; color: #e0e0e0; }
+#menu button:hover { background-color: #3f51b5; color: #fff; }
+.level-buttons button { background-color: #2e2e2e; color: #e0e0e0; }
+.level-buttons button:hover { background-color: #009688; color: #fff; }
+
+/* Карточка примера */
+#example {
+  font-size: 2.5em;
+  margin: 0 auto;
+  padding: 0.8em 1.5em;
+  background-color: #2b2b2b;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+  display: inline-block;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+  line-height: 1.2em;
+}
+
+/* Поле ввода и кнопка снизу */
+#input-area {
+  margin-top: 0.5em;
+  display: flex;
+  justify-content: center;
+  gap: 0.5em;
+  align-items: center;
+}
+
+input {
+  font-size: 1.2em;
+  padding: 0.5em;
+  width: 120px;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid #555;
+  background-color: #2b2b2b;
+  color: #fff;
+}
+
+/* Результат */
+#result {
+  font-size: 1.2em;
+  margin: 0.5em 0;
+}
+.correct { color: #4caf50; font-weight: 600; }
+.wrong { color: #f44336; font-weight: 600; }
+
+/* Время на пример */
+#singleTime {
+  font-weight: bold;
+  color: #ccc;
+}
+
+/* История */
+#history {
+  margin-top: 2em;
+  text-align: left;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #2b2b2b;
+  padding: 1em;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  font-size: 0.9em;
+}
+
+/* Кнопка назад */
+/* Кнопка назад на ПК */
+#backButton {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  border-radius: 10px;
+  background-color: #fff;
+  color: #1e1e1e;
+  border: 2px solid #1e1e1e;
+  cursor: pointer;
+  transition: 0.3s;
+  z-index: 1000;
+}
+#backButton:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
+}
+
+/* На мобильных экранах: внизу по центру */
+@media (max-width: 480px) {
+  #backButton {
+    top: auto;       /* убираем верхнее расположение */
+    bottom: 20px;    /* 20px от низа */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+
+/* Адаптация под телефоны */
+@media (max-width: 480px) {
+  #example {
+    font-size: 2em;
+    padding: 0.6em 1em;
+  }
+
+  input {
+    width: 90px;
+    font-size: 1em;
+  }
+
+  #input-area button,
+  #menu button,
+  .level-buttons button {
+    padding: 0.5em 1em;
+    font-size: 0.9em;
+  }
+
+  #history {
+    max-width: 90%;
+    font-size: 0.8em;
+  }
+}
