@@ -1,117 +1,81 @@
-let type = '';
-let exampleStartTime;
-let currentAnswer;
-let level = 'easy';
-let correctStreak = 0;
-const history = [];
+// Элементы DOM
+const exampleEl = document.getElementById('example');
+const answerInput = document.getElementById('answer');
+const historyEl = document.getElementById('history');
+const timerEl = document.getElementById('timer');
 
-// Звуки
-const correctSound = new Audio('https://freesound.org/data/previews/342/342756_3248244-lq.mp3'); 
-const wrongSound = new Audio('https://freesound.org/data/previews/156/156123_2659592-lq.mp3');
+// Настройки сложности
+let difficulty = 1; // 1 = лёгкий, 2 = средний, 3 = сложный
 
-function start(t) {
-  type = t;
-  document.getElementById('menu').style.display = 'none';
-  document.getElementById('train').style.display = 'block';
-  document.getElementById('backButton').style.display = 'inline-block';
-  correctStreak = 0;
-  nextExample();
-}
+// История примеров
+let history = [];
 
-function setLevel(lv) {
-  level = lv;
-  correctStreak = 0;
-  history.length = 0;
-  document.getElementById('history').innerHTML = '';
-  nextExample();
-}
+// Текущий пример
+let currentExample = { question: '', answer: 0 };
+let startTime = Date.now();
 
-function nextExample() {
-  let range;
-  switch(level) {
-    case 'easy': range = 10; break;
-    case 'medium': range = 50; break;
-    case 'hard': range = 100; break;
-    case 'extreme': range = 500; break;
-  }
-
-  let a = Math.floor(Math.random() * range + 1);
-  let b = Math.floor(Math.random() * range + 1);
-  if(type === 'division') a = a * b;
-
-  switch(type) {
-    case 'addition': currentAnswer = a+b; break;
-    case 'subtraction': currentAnswer = a-b; break;
-    case 'multiplication': currentAnswer = a*b; break;
-    case 'division': currentAnswer = a/b; break;
-  }
-
-  const exampleEl = document.getElementById('example');
-  exampleEl.innerText = `${a} ${getSymbol(type)} ${b}`;
-  exampleEl.style.transform = 'scale(0.9)';
-  exampleEl.style.backgroundColor = '#2b2b2b';
-  setTimeout(()=>exampleEl.style.transform='scale(1)', 100);
-
-  document.getElementById('answer').value = '';
-  document.getElementById('result').innerText = '';
-  document.getElementById('result').className = '';
-  exampleStartTime = new Date();
-}
-
-function getSymbol(t) {
-  switch(t) {
-    case 'addition': return '+';
-    case 'subtraction': return '-';
-    case 'multiplication': return '×';
-    case 'division': return '÷';
-  }
-}
-
-function checkAnswer() {
-  const ans = Number(document.getElementById('answer').value);
-  const elapsed = ((new Date() - exampleStartTime)/1000).toFixed(2);
-  const resultEl = document.getElementById('result');
-
-  if(ans === currentAnswer) {
-    resultEl.innerText = `✅ Правильно! (${elapsed}с)`;
-    resultEl.className = 'correct';
-    correctSound.play();
-    correctStreak++;
-
-    // Убираем авто-повышение уровня:
-    // if(correctStreak >= 5) { ... } → удаляем
-
-    history.push(`Пример: ${document.getElementById('example').innerText} → ${ans} (${elapsed}с)`);
-    updateHistory();
-    nextExample();
+// Генерация примера
+function generateExample() {
+  let a, b;
+  if (difficulty === 1) {
+    a = Math.floor(Math.random() * 10) + 1;
+    b = Math.floor(Math.random() * 10) + 1;
+  } else if (difficulty === 2) {
+    a = Math.floor(Math.random() * 50) + 1;
+    b = Math.floor(Math.random() * 50) + 1;
   } else {
-    resultEl.innerText = '❌ Неправильно, попробуй ещё';
-    resultEl.className = 'wrong';
-    wrongSound.play();
-    correctStreak = 0;
+    a = Math.floor(Math.random() * 100) + 1;
+    b = Math.floor(Math.random() * 100) + 1;
   }
 
-  document.getElementById('singleTime').innerText = elapsed;
+  const ops = ['+', '-', '*'];
+  const op = ops[Math.floor(Math.random() * ops.length)];
+
+  let ans;
+  if (op === '+') ans = a + b;
+  else if (op === '-') ans = a - b;
+  else ans = a * b;
+
+  currentExample = { question: `${a} ${op} ${b}`, answer: ans };
+  exampleEl.textContent = currentExample.question;
+
+  // Сбрасываем таймер
+  startTime = Date.now();
 }
 
+// Функции отображения
+function showCorrect() {
+  const timeSpent = ((Date.now() - startTime) / 1000).toFixed(2);
+  history.push(`${currentExample.question} = ${currentExample.answer} ✅ (${timeSpent}s)`);
+  updateHistory();
+}
 
+function showWrong() {
+  // Можно оставить пустым или добавить подсветку ошибки
+}
+
+// Обновляем историю
 function updateHistory() {
-  document.getElementById('history').innerHTML = history.slice(-10).map(h => `<p>${h}</p>`).join('');
+  historyEl.innerHTML = history.map(h => `<div>${h}</div>`).join('');
 }
 
-function goBack() {
-  document.getElementById('train').style.display = 'none';
-  document.getElementById('menu').style.display = 'block';
-  document.getElementById('history').innerHTML = '';
-  history.length = 0;
-  correctStreak = 0;
-  document.getElementById('singleTime').innerText = '0';
-  document.getElementById('backButton').style.display = 'none';
+// Переход к следующему примеру
+function nextExample() {
+  generateExample();
 }
 
-// Enter
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && document.getElementById('train').style.display === 'block') {
-    checkAnswer();
+// Проверка в реальном времени
+function checkAnswerRealtime() {
+  const userAnswer = answerInput.value.trim();
+  if (userAnswer === currentExample.answer.toString()) {
+    showCorrect();
+    nextExample();
+    answerInput.value = '';
   }
-});
+}
+
+// Ловим любой ввод в поле
+answerInput.addEventListener('input', checkAnswerRealtime);
+
+// Инициализация
+generateExample();
