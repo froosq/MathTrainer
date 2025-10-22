@@ -1,4 +1,3 @@
-/* Основной фон и шрифты */
 body {
   font-family: 'Inter', sans-serif;
   background-color: #1e1e1e;
@@ -8,7 +7,6 @@ body {
   margin: 0;
 }
 
-/* Заголовок */
 h1 {
   font-weight: 600;
   font-size: 2.5em;
@@ -16,7 +14,6 @@ h1 {
   color: #ffffff;
 }
 
-/* Кнопки */
 button {
   margin: 0.5em;
   padding: 0.7em 1.5em;
@@ -33,13 +30,11 @@ button:hover {
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
-/* Типы и уровни */
 #menu button { background-color: #2e2e2e; color: #e0e0e0; }
 #menu button:hover { background-color: #3f51b5; color: #fff; }
 .level-buttons button { background-color: #2e2e2e; color: #e0e0e0; }
 .level-buttons button:hover { background-color: #009688; color: #fff; }
 
-/* Карточка примера */
 #example {
   font-size: 2.5em;
   margin: 0 auto;
@@ -52,7 +47,6 @@ button:hover {
   line-height: 1.2em;
 }
 
-/* Поле ввода и кнопка снизу */
 #input-area {
   margin-top: 0.5em;
   display: flex;
@@ -72,21 +66,19 @@ input {
   color: #fff;
 }
 
-/* Результат */
 #result {
   font-size: 1.2em;
   margin: 0.5em 0;
 }
+
 .correct { color: #4caf50; font-weight: 600; }
 .wrong { color: #f44336; font-weight: 600; }
 
-/* Время на пример */
 #singleTime {
   font-weight: bold;
   color: #ccc;
 }
 
-/* История */
 #history {
   margin-top: 2em;
   text-align: left;
@@ -100,8 +92,6 @@ input {
   font-size: 0.9em;
 }
 
-/* Кнопка назад */
-/* Кнопка назад на ПК */
 #backButton {
   position: fixed;
   top: 20px;
@@ -121,19 +111,14 @@ input {
   transform: translateY(-2px);
 }
 
-/* На мобильных экранах: внизу по центру */
 @media (max-width: 480px) {
   #backButton {
-    top: auto;       /* убираем верхнее расположение */
-    bottom: 20px;    /* 20px от низа */
+    top: auto;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
   }
-}
 
-
-/* Адаптация под телефоны */
-@media (max-width: 480px) {
   #example {
     font-size: 2em;
     padding: 0.6em 1em;
