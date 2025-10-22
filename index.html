@@ -8,10 +8,12 @@
 </head>
 <body>
 
+<!-- Кнопка назад -->
 <button id="backButton" onclick="goBack()" style="display:none;">← Назад</button>
 
 <h1>Тренажёр устного счёта</h1>
 
+<!-- Меню выбора типа счёта -->
 <div id="menu">
   <p>Выберите тип счёта:</p>
   <button onclick="start('addition')">Сложение</button>
@@ -20,24 +22,19 @@
   <button onclick="start('division')">Деление</button>
 </div>
 
+<!-- Тренировка -->
 <div id="train" style="display:none;">
-  <!-- Пример сверху -->
   <div id="example"></div>
 
-  <!-- Поле ввода и кнопка -->
   <div id="input-area">
     <input id="answer" type="number" inputmode="numeric" pattern="[0-9]*" autocomplete="off" autofocus>
-    <button onclick="checkAnswer()">Проверить</button>
   </div>
 
-  <!-- Результат и таймер -->
   <p id="result"></p>
   <p>Время на пример: <span id="singleTime">0</span> секунд</p>
 
-  <!-- История -->
   <div id="history"></div>
 
-  <!-- Уровни сложности -->
   <div class="level-buttons">
     <p>Выбери уровень сложности:</p>
     <button onclick="setLevel('easy')">Лёгкий</button>
